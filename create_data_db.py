@@ -16,20 +16,6 @@ def create_db():
     db.create_all()
 
 
-    for movie in DATA_DB["movies"]:
-        m = Movie(
-            id=movie["pk"],
-            title=movie["title"],
-            description=movie["description"],
-            trailer=movie["trailer"],
-            year=movie["year"],
-            rating=movie["rating"],
-            genre_id=movie["genre_id"],
-            director_id=movie["director_id"],
-        )
-        with db.session.begin():
-            db.session.add(m)
-
     for director in DATA_DB["directors"]:
         d = Director(
             id=director["pk"],
@@ -45,3 +31,17 @@ def create_db():
         )
         with db.session.begin():
             db.session.add(d)
+
+    for movie in DATA_DB["movies"]:
+        m = Movie(
+            id=movie["pk"],
+            title=movie["title"],
+            description=movie["description"],
+            trailer=movie["trailer"],
+            year=movie["year"],
+            rating=movie["rating"],
+            genre_id=movie["genre_id"],
+            director_id=movie["director_id"],
+        )
+        with db.session.begin():
+            db.session.add(m)
