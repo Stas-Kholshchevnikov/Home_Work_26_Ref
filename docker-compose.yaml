@@ -1,4 +1,4 @@
-version: "3.3"
+version: "2.2"
 
 services:
   app:
@@ -9,7 +9,7 @@ services:
       - db
 
   db:
-    image: postgres:latest
+    image: postgres
     environment:
       - POSTGRES_USER=db_user
       - POSTGRES_PASSWORD=db_password
