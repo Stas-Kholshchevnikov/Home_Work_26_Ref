@@ -4,16 +4,21 @@ services:
   app:
     image: ${IMAGE_TAG}:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     ports:
-      - 5000:5000
+      - 80:5000
     depends_on:
       - db
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
 
   db:
     image: postgres
     environment:
-      - POSTGRES_USER=db_user
-      - POSTGRES_PASSWORD=db_password
-      - POSTGRES_DB=db_name
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     ports:
       - 5436:5432
 

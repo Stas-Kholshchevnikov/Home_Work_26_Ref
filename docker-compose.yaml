@@ -7,6 +7,11 @@ services:
       - 5000:5000
     depends_on:
       - db
+    environment:
+      - DB_NAME=db_name
+      - DB_USER=db_user
+      - DB_PASSWORD=db_password
+      - DB_HOST=db
 
   db:
     image: postgres
@@ -16,7 +21,3 @@ services:
       - POSTGRES_DB=db_name
     ports:
       - 5436:5432
-
-
-
-
