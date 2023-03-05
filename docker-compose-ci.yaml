@@ -1,31 +1,26 @@
-version: "3.3"
+version: "2.2"
 
 services:
   app:
-    build: .
+    image: ${IMAGE_TAG}:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     ports:
       - 80:5000
     depends_on:
       db:
         condition: service_healthy
     environment:
-      - DB_NAME=db_name
-      - DB_USER=db_user
-      - DB_PASSWORD=db_password
-      - DB_HOST=db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
     command: ["python", "main.py"]
 
-
   db:
-    image: postgres
+    image: postgres:latest
     environment:
-      - POSTGRES_USER=db_user
-      - POSTGRES_PASSWORD=db_password
-      - POSTGRES_DB=db_name
-
-    ports:
-      - 5436:5432
-
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=db_${DB_NAME}
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
       interval: 1s
